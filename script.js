@@ -22,8 +22,7 @@ const defaultMarket = [
     { name: "Liam Brown", pos: "MF", rating: 76, price: 300000, wage: 8000 },
     { name: "Erick Hansen", pos: "DF", rating: 78, price: 400000, wage: 9500 },
     { name: "Sergio Ramos", pos: "DF", rating: 88, price: 5000000, wage: 50000 },
-    { name: "Kylian Mbappe", pos: "FW", rating: 92, price: 15000000, wage: 120000 },
-    { name: "Iker Casillas", pos: "GK", rating: 92, price: 900000, wage: 18050 }
+    { name: "Kylian Mbappe", pos: "FW", rating: 92, price: 15000000, wage: 120000 }
 ];
 
 // Load Data Simpanan (localStorage)
@@ -32,10 +31,9 @@ let opponentClub = localStorage.getItem('tycoon_oppClub') || availableClubs[1].n
 let balance = parseFloat(localStorage.getItem('tycoon_balance')) || 10000000;
 let fans = parseInt(localStorage.getItem('tycoon_fans')) || 5000;
 
-// Load Squad & Market (Auto Reset jika Market Kosong)
+// Load Squad & Market
 let squad = JSON.parse(localStorage.getItem('tycoon_squad')) || defaultSquad;
-let savedMarket = JSON.parse(localStorage.getItem('tycoon_market'));
-let market = (!savedMarket || savedMarket.length === 0) ? [...defaultMarket] : savedMarket;
+let market = JSON.parse(localStorage.getItem('tycoon_market')) || defaultMarket.filter(mPlayer => !squad.some(sPlayer => sPlayer.name === mPlayer.name));
 
 let boardConfidence = 100;
 let ticketPrice = 15;
@@ -199,30 +197,25 @@ function openMyClubModal() {
     document.getElementById('club-select-modal').style.display = 'flex';
 }
 
-function openMyClubModal() {
-    const container = document.getElementById('my-club-list');
+function openFightClubModal() {
+    const container = document.getElementById('fight-club-list');
     if (!container) return;
     container.innerHTML = "";
     availableClubs.forEach(club => {
-        const btn = document.createElement('button');
-        btn.className = "club-opt-btn";
-        btn.innerText = club.name;
-        btn.onclick = () => {
-            myClub = club.name; // Set nama kelab baru
-            
-            // Jika kelab kita sama dengan kelab lawan, ubah kelab lawan
-            if (myClub === opponentClub) {
-                const otherClubs = availableClubs.filter(c => c.name !== myClub);
-                opponentClub = otherClubs[0].name;
-            }
-            
-            saveGameState(); // SIMPAN DATA TERUS
-            updateUI();      // KEMASKINI PAPARAN SKRIN TERUS
-            document.getElementById('club-select-modal').style.display = 'none';
-        };
-        container.appendChild(btn);
+        if (club.name !== myClub) {
+            const btn = document.createElement('button');
+            btn.className = "club-opt-btn";
+            btn.innerText = club.name;
+            btn.onclick = () => {
+                opponentClub = club.name;
+                saveGameState();
+                updateUI();
+                document.getElementById('fight-select-modal').style.display = 'none';
+            };
+            container.appendChild(btn);
+        }
     });
-    document.getElementById('club-select-modal').style.display = 'flex';
+    document.getElementById('fight-select-modal').style.display = 'flex';
 }
 
 function showScreen(screenId) {
@@ -282,6 +275,7 @@ function switchTab(tabId, clickedBtn) {
     if (clickedBtn) clickedBtn.classList.add('active');
 }
 
+// RENDER SQUAD & FUNGSI JUAL
 function renderSquad() {
     const list = document.getElementById('squad-list');
     if (!list) return;
@@ -332,10 +326,22 @@ function getTeamRating() {
     return Math.round(total / squad.length);
 }
 
+// RENDER MARKET & SCOUT PLAYER
 function renderMarket() {
     const list = document.getElementById('market-list');
     if (!list) return;
     list.innerHTML = "";
+
+    const refreshBox = document.createElement('div');
+    refreshBox.style.marginBottom = "10px";
+    
+    const scoutBtn = document.createElement('button');
+    scoutBtn.innerText = "🔍 Scout New Player ($10,000)";
+    scoutBtn.style.cssText = "width:100%; background-color:#0288d1; color:white; border:none; padding:8px; border-radius:6px; font-weight:bold; cursor:pointer;";
+    scoutBtn.addEventListener('click', generateRandomMarketPlayer);
+    
+    refreshBox.appendChild(scoutBtn);
+    list.appendChild(refreshBox);
 
     market.forEach((player, index) => {
         const li = document.createElement('li');
@@ -350,6 +356,41 @@ function renderMarket() {
         li.appendChild(buyBtn);
         list.appendChild(li);
     });
+}
+
+function generateRandomMarketPlayer() {
+    const scoutCost = 10000;
+    
+    if (balance < scoutCost) {
+        alert("Duit tidak mencukupi untuk bayar kos Scout ($10,000)!");
+        return;
+    }
+
+    balance -= scoutCost;
+
+    const firstNames = ["Ahmad", "Lucas", "Mateo", "Sami", "Leo", "Sora", "Bruno", "Jamal"];
+    const lastNames = ["Silva", "Zidane", "Rashford", "Garcia", "Yamal", "Modric", "Saka", "Nunez"];
+    const positions = ["FW", "MF", "DF", "GK"];
+
+    const randomName = `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${lastNames[Math.floor(Math.random() * lastNames.length)]}`;
+    const randomPos = positions[Math.floor(Math.random() * positions.length)];
+    const randomRating = Math.floor(Math.random() * 25) + 68;
+    const calculatedPrice = Math.floor(randomRating * randomRating * 80);
+    const calculatedWage = Math.floor(randomRating * 120);
+
+    const newPlayer = {
+        name: randomName,
+        pos: randomPos,
+        rating: randomRating,
+        price: calculatedPrice,
+        wage: calculatedWage
+    };
+
+    market.push(newPlayer);
+    saveGameState();
+    renderMarket();
+    updateUI();
+    logCommentary(`SCOUT: Pemain baharu ${newPlayer.name} (${newPlayer.pos}) dimasukkan ke Transfer Market!`);
 }
 
 function buyPlayer(index) {
@@ -374,9 +415,6 @@ async function playMatch() {
     if (!btn || btn.disabled) return;
     
     btn.disabled = true;
-
-    // Pastikan simpan pilihan kelab terkini SEBELUM mula simulasi
-    saveGameState();
 
     const totalWages = squad.reduce((sum, p) => sum + p.wage, 0);
     balance -= totalWages;

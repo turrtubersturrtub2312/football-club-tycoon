@@ -17,7 +17,6 @@
         <div class="menu-card">
             <h1>⚽ Football Club Tycoon</h1>
             
-            <!-- SELECTION IN MAIN MENU -->
             <div class="menu-selection-box">
                 <button class="menu-btn select-btn" id="select-your-club-btn">Your Club: <span id="menu-my-club">Real Madrid</span></button>
                 <button class="menu-btn select-btn fight-btn" id="select-opponent-btn">Your Fight Club: <span id="menu-fight-club">Barcelona</span></button>
@@ -37,7 +36,7 @@
                 <h1>⚽ Football Club Tycoon</h1>
                 <div class="top-bar">
                     <div><strong>Club:</strong> <span id="club-name">Real Madrid</span></div>
-                    <div><strong>Balance:</strong> $<span id="balance">10</span></div>
+                    <div><strong>Balance:</strong> $<span id="balance">10,000,000</span></div>
                     <div><strong>Fans:</strong> <span id="fans">5,000</span></div>
                     <div><strong>Board Confidence:</strong> <span id="board-confidence">100</span>%</div>
                 </div>
@@ -51,18 +50,15 @@
                 <button class="tab-btn" data-tab="trophies">Trophies</button>
             </nav>
 
-            <!-- TAB 1: DASHBOARD & MATCH -->
+            <!-- TAB 1: DASHBOARD -->
             <section id="tab-dashboard" class="tab-content active">
                 <h2>Match Center</h2>
-
                 <div class="card match-status-card">
                     <p><strong>Next Match:</strong> <span id="my-club-display">Real Madrid</span> VS <span id="opponent-club-display" style="color: #ff5252;">Barcelona</span></p>
                 </div>
-
                 <div class="card">
                     <button class="action-btn" id="play-match-btn">Play Next Match</button>
                 </div>
-                
                 <div class="card">
                     <h3>Live Commentary &amp; Log</h3>
                     <div id="commentary-box" class="commentary-box">
@@ -98,7 +94,7 @@
                 </div>
             </section>
 
-            <!-- TAB 4: FINANCES & SPONSORS -->
+            <!-- TAB 4: FINANCES -->
             <section id="tab-finance" class="tab-content">
                 <h2>Club Finances</h2>
                 <div class="card">
@@ -118,19 +114,15 @@
                 <h2>Trophy Cabinet</h2>
                 <div class="card">
                     <div class="trophy-grid">
-                        <div class="trophy-card">
-                            🏆 <strong>League Titles:</strong> <span id="league-trophies">0</span>
-                        </div>
-                        <div class="trophy-card">
-                            🥇 <strong>Cup Titles:</strong> <span id="cup-trophies">0</span>
-                        </div>
+                        <div class="trophy-card">🏆 <strong>League Titles:</strong> <span id="league-trophies">0</span></div>
+                        <div class="trophy-card">🥇 <strong>Cup Titles:</strong> <span id="cup-trophies">0</span></div>
                     </div>
                 </div>
             </section>
         </div>
     </div>
 
-    <!-- MODAL POPUP (GENERAL / ABOUT) -->
+    <!-- MODALS -->
     <div id="modal-overlay" class="modal">
         <div class="modal-card">
             <h2 id="modal-title">Title</h2>
@@ -139,7 +131,6 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP (SELECT YOUR CLUB) -->
     <div id="club-select-modal" class="modal">
         <div class="modal-card">
             <h2>Choose Your Club</h2>
@@ -148,7 +139,6 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP (SELECT FIGHT CLUB) -->
     <div id="fight-select-modal" class="modal">
         <div class="modal-card">
             <h2>Choose Fight Club (Opponent)</h2>
@@ -157,22 +147,19 @@
         </div>
     </div>
 
-    <!-- ADMIN PANEL (SPECIAL FOR OWNER) -->
-    <!-- ADMIN MONEY PANEL (SECRET CODE: 9999) -->
+    <!-- OWNER MONEY PANEL (SECRET CODE: 9999) -->
     <div id="money-panel" class="modal">
-      <div class="modal-card" style="border-color: #ffd700;">
-        <h2 style="color: #ffd700;">💰 Owner Money Panel</h2>
-        <p style="font-size: 13px; color: #aaa; margin-bottom: 15px;">Masukkan jumlah duit yang anda mahukan:</p>
-        
-        <div class="input-group">
-            <input type="number" id="custom-money-input" placeholder="Contoh: 1000000000" style="width: 100%; padding: 10px; font-size: 16px;">
+        <div class="modal-card" style="border-color: #ffd700;">
+            <h2 style="color: #ffd700;">💰 Owner Money Panel</h2>
+            <p style="font-size: 13px; color: #aaa; margin-bottom: 15px;">Masukkan jumlah duit yang anda mahukan:</p>
+            <div class="input-group">
+                <input type="number" id="custom-money-input" placeholder="Contoh: 1000000000" style="width: 100%; padding: 10px; font-size: 16px;">
+            </div>
+            <button class="action-btn" id="add-money-btn" style="background-color: #ffd700; color: #121212; margin-top: 10px;">Set Balance</button>
+            <button class="action-btn" id="close-money-btn" style="background-color: #555; color: white; margin-top: 8px;">Cancel</button>
         </div>
+    </div>
 
-        <button class="action-btn" id="add-money-btn" style="background-color: #ffd700; color: #121212; margin-top: 10px;">Set Balance</button>
-       <button class="action-btn" id="close-money-btn" style="background-color: #555; color: white; margin-top: 8px;">Cancel</button>
-      99999</div>
-   </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 
 <script src="./script.js" type="module"></script></body></html>
