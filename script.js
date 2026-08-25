@@ -32,7 +32,7 @@ let opponentClub = localStorage.getItem('tycoon_oppClub') || availableClubs[1].n
 let balance = parseFloat(localStorage.getItem('tycoon_balance')) || 10000000;
 let fans = parseInt(localStorage.getItem('tycoon_fans')) || 5000;
 
-// Load Squad & Market (Auto reset jika market kosong)
+// Load Squad & Market (Auto Reset jika Market Kosong)
 let squad = JSON.parse(localStorage.getItem('tycoon_squad')) || defaultSquad;
 let savedMarket = JSON.parse(localStorage.getItem('tycoon_market'));
 let market = (!savedMarket || savedMarket.length === 0) ? [...defaultMarket] : savedMarket;
