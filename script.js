@@ -168,8 +168,8 @@ function setupEventListeners() {
 function saveGameState() {
     localStorage.setItem('tycoon_balance', balance);
     localStorage.setItem('tycoon_fans', fans);
-    localStorage.setItem('tycoon_myClub', myClub);
-    localStorage.setItem('tycoon_oppClub', opponentClub);
+    localStorage.setItem('tycoon_myClub', myClub); // Simpan kelab anda
+    localStorage.setItem('tycoon_oppClub', opponentClub); // Simpan kelab lawan
     localStorage.setItem('tycoon_squad', JSON.stringify(squad));
     localStorage.setItem('tycoon_market', JSON.stringify(market));
 }
@@ -235,14 +235,19 @@ function closeModal() {
 }
 
 function updateUI() {
+    // Kemaskini nama di Menu Utama
     const menuMyClub = document.getElementById('menu-my-club');
     if (menuMyClub) menuMyClub.innerText = myClub;
     
     const menuFightClub = document.getElementById('menu-fight-club');
     if (menuFightClub) menuFightClub.innerText = opponentClub;
 
+    // Kemaskini nama di Skrin Perlawanan
     const clubName = document.getElementById('club-name');
     if (clubName) clubName.innerText = myClub;
+
+    const headerClub = document.getElementById('my-club-display-header');
+    if (headerClub) headerClub.innerText = myClub;
     
     const myClubDisp = document.getElementById('my-club-display');
     if (myClubDisp) myClubDisp.innerText = myClub;
@@ -250,6 +255,7 @@ function updateUI() {
     const oppClubDisp = document.getElementById('opponent-club-display');
     if (oppClubDisp) oppClubDisp.innerText = opponentClub;
 
+    // Kemaskini Status Kewangan
     const balElem = document.getElementById('balance');
     if (balElem) balElem.innerText = balance.toLocaleString();
 
@@ -258,12 +264,6 @@ function updateUI() {
 
     const boardElem = document.getElementById('board-confidence');
     if (boardElem) boardElem.innerText = boardConfidence;
-
-    const lTrophies = document.getElementById('league-trophies');
-    if (lTrophies) lTrophies.innerText = leagueTitles;
-
-    const cTrophies = document.getElementById('cup-trophies');
-    if (cTrophies) cTrophies.innerText = cupTitles;
 }
 
 function switchTab(tabId, clickedBtn) {
@@ -370,6 +370,9 @@ async function playMatch() {
     
     btn.disabled = true;
 
+    // Simpan status semasa sebelum perlawanan bermula
+    saveGameState();
+
     const totalWages = squad.reduce((sum, p) => sum + p.wage, 0);
     balance -= totalWages;
 
@@ -380,6 +383,7 @@ async function playMatch() {
 
     const oppData = availableClubs.find(c => c.name === opponentClub) || { power: 75 };
 
+    // Ulasan menggunakan kelab pilihan anda
     logCommentary(`--- MATCHDAY: ${myClub} VS ${opponentClub} ---`);
     logCommentary(`Attendance: ${matchAttendance} fans. Ticket Income: $${matchIncome.toLocaleString()}`);
 
@@ -416,6 +420,7 @@ async function playMatch() {
         boardConfidence -= 8;
     }
 
+    // Simpan dan kemaskini UI semula
     saveGameState();
     updateUI();
     btn.disabled = false;
