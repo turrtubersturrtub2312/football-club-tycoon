@@ -1,0 +1,285 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+}
+
+.screen.active {
+    display: block;
+}
+
+.menu-card {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+.menu-card h1 {
+    color: #00e676;
+    margin-bottom: 25px;
+}
+
+.menu-selection-box {
+    margin-bottom: 15px;
+}
+
+.menu-btn {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    background-color: #2a2a2a;
+    border: 2px solid #00e676;
+    color: #00e676;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.menu-btn:hover {
+    background-color: #00e676;
+    color: #121212;
+}
+
+.select-btn {
+    border-color: #0288d1;
+    color: #03a9f4;
+}
+
+.select-btn:hover {
+    background-color: #0288d1;
+    color: white;
+}
+
+.fight-btn {
+    border-color: #e53935;
+    color: #ff5252;
+}
+
+.fight-btn:hover {
+    background-color: #e53935;
+    color: white;
+}
+
+.play-btn {
+    background-color: #00e676;
+    color: #121212;
+    font-size: 18px;
+}
+
+.play-btn:hover {
+    background-color: #00c853;
+}
+
+.about-btn {
+    border-color: #555;
+    color: #aaa;
+}
+
+.about-btn:hover {
+    background-color: #555;
+    color: white;
+}
+
+.game-container {
+    background-color: #1e1e1e;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+}
+
+.back-menu-btn {
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.back-menu-btn:hover {
+    color: #00e676;
+}
+
+header h1 {
+    text-align: center;
+    color: #00e676;
+    margin-bottom: 15px;
+}
+
+.top-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background-color: #2a2a2a;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.nav-tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border: none;
+    color: #aaa;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.tab-btn.active {
+    background-color: #00e676;
+    color: #121212;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.card {
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+    color: #00e676;
+}
+
+.match-status-card {
+    text-align: center;
+    font-size: 16px;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #00e676;
+    border: none;
+    color: #121212;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.commentary-box {
+    background-color: #121212;
+    padding: 10px;
+    border-radius: 6px;
+    height: 150px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 13px;
+    color: #00ffcc;
+}
+
+.item-list {
+    list-style: none;
+}
+
+.item-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+}
+
+.club-selection-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.club-opt-btn {
+    padding: 10px;
+    background-color: #2a2a2a;
+    border: 1px solid #00e676;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.club-opt-btn:hover {
+    background-color: #00e676;
+    color: #121212;
+}
+
+select, input[type="range"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    background-color: #121212;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 4px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal-card {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #00e676;
+}
+
+.modal-card h2 {
+    color: #00e676;
+    margin-bottom: 15px;
+}
