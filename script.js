@@ -368,57 +368,12 @@ async function playMatch() {
     const btn = document.getElementById('play-match-btn');
     if (!btn || btn.disabled) return;
     
+    // Simpan dulu pilihan kelab semasa sebelum match bermula
+    saveGameState(); 
+
     btn.disabled = true;
 
-    const totalWages = squad.reduce((sum, p) => sum + p.wage, 0);
-    balance -= totalWages;
-
-    const attendanceFactor = Math.max(0.2, 1 - (ticketPrice - 15) * 0.03);
-    const matchAttendance = Math.floor(fans * attendanceFactor);
-    const matchIncome = matchAttendance * ticketPrice;
-    balance += matchIncome;
-
-    const oppData = availableClubs.find(c => c.name === opponentClub) || { power: 75 };
-
-    logCommentary(`--- MATCHDAY: ${myClub} VS ${opponentClub} ---`);
-    logCommentary(`Attendance: ${matchAttendance} fans. Ticket Income: $${matchIncome.toLocaleString()}`);
-
-    let myScore = 0;
-    let oppScore = 0;
-    let teamPower = getTeamRating() + (currentTactic === "Gegenpressing" ? 5 : 0);
-    let oppPower = oppData.power + Math.floor(Math.random() * 5);
-
-    for (let min = 15; min <= 90; min += 25) {
-        await new Promise(r => setTimeout(r, 400));
-        
-        const rand = Math.random() * (teamPower + oppPower);
-        if (rand < teamPower) {
-            myScore++;
-            logCommentary(`[${min}'] GOAL! ${myClub} scores! (${myScore}-${oppScore})`);
-        } else if (rand < teamPower + oppPower * 0.4) {
-            oppScore++;
-            logCommentary(`[${min}'] GOAL! ${opponentClub} scores! (${myScore}-${oppScore})`);
-        } else {
-            logCommentary(`[${min}'] Tight play in the midfield...`);
-        }
-    }
-
-    if (myScore > oppScore) {
-        logCommentary(`FULL TIME: VICTORY! ${myClub} beat ${opponentClub} ${myScore}-${oppScore}.`);
-        fans += 150;
-        boardConfidence = Math.min(100, boardConfidence + 5);
-        wins++;
-    } else if (myScore === oppScore) {
-        logCommentary(`FULL TIME: DRAW! Final score ${myScore}-${oppScore}.`);
-    } else {
-        logCommentary(`FULL TIME: DEFEAT! ${opponentClub} won ${oppScore}-${myScore}.`);
-        fans = Math.max(100, fans - 100);
-        boardConfidence -= 8;
-    }
-
-    saveGameState();
-    updateUI();
-    btn.disabled = false;
+    // ... (kod match seterusnya)
 }
 
 function logCommentary(msg) {
